@@ -9,8 +9,9 @@ from NN import *
 '''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''''
 N = 20
 TEST_SIZE = 80
-RUNS = 1
+RUNS = 100
 LEARNING_RATE = 0.001
+SHOW_MAP = False
 
 # If the machine has a GPU, utilize it
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -31,7 +32,7 @@ def Train(train_x, train_y):
         loss = F.mse_loss(output, train_y)
         loss.backward()
         optimizer.step()
-        if k % 1000 == 0:
+        if k % 10000 == 0:
             print(k, loss)
         k += 1
 
@@ -82,18 +83,32 @@ if __name__ == "__main__":
     ca = CA(N, N)
     for i in range(1000):
         ca.generate()
+        if SHOW_MAP:
+            plt.imshow(ca.get_cells(), cmap=plt.cm.gray, interpolation='nearest')
+            plt.pause(0.01)
         if ca.check_for_stability():
+            plt.title("Stable")
+            plt.imshow(ca.get_cells(), cmap=plt.cm.gray, interpolation='nearest')
+            plt.show()
             print("Generation: {}".format(i))
             break
     
     train_x, train_y, test_x, test_y = get_testing_data(ca.get_cells())
 
+    runs = []
     efficiency = []
     for i in range(RUNS):
         model = Train(train_x, train_y)
         res = Test(model, test_x, test_y)
+        runs.append(i + 1)
         efficiency.append(res)
         print("Run {} efficiency: {}%".format(i, res)) 
+    
+    file = 'test.txt'
+    form = "%i %.2f \n"
+    with open(file,'w') as f:
+        for i in range(len(runs)):
+            f.write(form % (runs[i],efficiency[i]))
 
-    runs = np.linspace(1, 100, 1)
+
     display_results(runs, efficiency)

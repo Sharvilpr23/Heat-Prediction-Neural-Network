@@ -9,9 +9,6 @@ class CA:
         self.height = h
         self.generations = []
 
-        for i in range(h):
-            self.cells[i, 0] = i * (h - i)
-
         for i in range(h): 
             self.cells[i, w - 1] = i * (h - i)
         
@@ -41,7 +38,7 @@ class CA:
         self.generations.append(self.cells)
 
     def update(self, neighbors):
-        return sum(neighbors) // 4
+        return sum(neighbors) / 4
 
     def Sum(self, cells):
         return sum([sum(row) for row in cells])

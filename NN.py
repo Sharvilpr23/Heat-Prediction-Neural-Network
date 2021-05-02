@@ -15,7 +15,7 @@ class Net(nn.Module):
 
     def forward(self, x):
         x = self.fc0(x)
-        x = F.sigmoid(self.fc1(x))
-        x = F.sigmoid(self.fc2(x))
+        x = torch.sigmoid(self.fc1(x))
+        x = torch.sigmoid(self.fc2(x))
         x = self.fc3(x)
         return x
