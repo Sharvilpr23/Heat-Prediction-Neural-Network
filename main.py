@@ -12,6 +12,7 @@ TEST_SIZE = 80
 RUNS = 100
 LEARNING_RATE = 0.001
 SHOW_MAP = False
+file = 'results.txt'
 
 # If the machine has a GPU, utilize it
 device = 'cuda' if torch.cuda.is_available() else 'cpu'
@@ -32,7 +33,7 @@ def Train(train_x, train_y):
         loss = F.mse_loss(output, train_y)
         loss.backward()
         optimizer.step()
-        if k % 10000 == 0:
+        if k % 1000 == 0:
             print(k, loss)
         k += 1
 
@@ -42,7 +43,7 @@ def Test(model, test_x, test_y):
     count = 0
     prediction = model(test_x)
     for i in range(TEST_SIZE):
-        if torch.round(prediction[i]) == torch.round(test_y[i]):
+        if 0 <= math.abs(prediction[i] - test_y[i]): <= 0.5:
             count += 1
 
     return (count / TEST_SIZE) * 100
@@ -104,7 +105,6 @@ if __name__ == "__main__":
         efficiency.append(res)
         print("Run {} efficiency: {}%".format(i, res)) 
     
-    file = 'test.txt'
     form = "%i %.2f \n"
     with open(file,'w') as f:
         for i in range(len(runs)):
