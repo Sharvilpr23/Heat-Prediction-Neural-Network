@@ -24,3 +24,13 @@ The entire dataset is passed through the network multiple times, known as epochs
 
 **Testing the Network**\
 Once the network is trained, we can use our testing data to predict the temperatures. Each of the data points is passed to the network and the output predicted is compared to the actual value. Then we calculate the percentage of correctly predicted temperatures (within acceptable limits).
+
+**Results**\
+Loss over Epochs\
+![Loss over Epochs](https://github.com/Sharvilpr23/Heat-Prediction-Neural-Network/blob/master/media/lossvepoch.png)\
+
+Efficiency over 100 runs (200 x 200 Hidden nodes)\
+![Efficiency over 100 runs](https://github.com/Sharvilpr23/Heat-Prediction-Neural-Network/blob/master/media/efficiencyover100runs.png)\
+
+Efficiency over 100 runs (Using 20 x 20, 100 x 100, 200 x 200 Hidden nodes)\
+![Efficiency over 100 runs](https://github.com/Sharvilpr23/Heat-Prediction-Neural-Network/blob/master/media/diffhiddennodes.png)\
